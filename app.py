@@ -57,23 +57,18 @@ if st.button("🔍 Predict"):
         "ca": ca,
         "thal": thal
     }
-response = requests.post(API_URL, json=input_data)
 
-if response.status_code != 200:
-    st.error(f"Something went wrong. Status code: {response.status_code}")
-else:
-    st.write("Respons mentah dari API:")
-    st.text(response.text) 
+    response = requests.post(API_URL, json=input_data)
+
+    if response.status_code != 200:
+        st.error("Something went wrong. Try again later...")
     
-    try:
+    else:
         result = response.json()
         prediction = result["prediction"]
         probability = result["probability"]
         diagnosis = result["diagnosis"]
-        
-        st.success(f"Hasil Prediksi: {diagnosis}")
-    except Exception as e:
-        st.error(f"Gagal mengubah ke JSON. Error: {e}")
+
         st.divider()
 
         st.metric(
